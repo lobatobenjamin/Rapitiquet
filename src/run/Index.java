@@ -63,7 +63,7 @@ public class Index extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("RapiTiquet v1.6");
+        setTitle("RapiTiquet v1.7");
 
         txtBarra.setBackground(new java.awt.Color(180, 180, 233));
         txtBarra.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
@@ -77,7 +77,7 @@ public class Index extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Pase el articulo por el Lector de codigos de");
+        jLabel1.setText("Pase el articulo por el lector de códigos de");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText(" barras o digite el PLU del producto para");
@@ -90,7 +90,7 @@ public class Index extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -115,23 +115,18 @@ public class Index extends javax.swing.JFrame {
         );
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/run/LogoRapi02.png"))); // NOI18N
+        jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtBarra))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(txtBarra)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -153,7 +148,7 @@ public class Index extends javax.swing.JFrame {
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txtBarra.getText().trim().length() > 14) {
-                JOptionPane.showMessageDialog(null, "El codigo de barras o PLUS digitado, sobrepasa la longitud permitida");
+                JOptionPane.showMessageDialog(null, "El código de barras o PLU digitado sobrepasa la longitud permitida.");
             } else {
                 if (txtBarra.getText().length() != 0) {
                     String codBarra = this.txtBarra.getText().trim();
@@ -182,8 +177,9 @@ public class Index extends javax.swing.JFrame {
     public void init() {
         tiquet = new Tiquet();
         tiquet.cargarIni();
-        if (tiquet.getQuery().isEmpty()) {
+        if (tiquet.getAlmacen().isEmpty() || tiquet.getTarifa() == 0) {
             this.txtBarra.setEditable(false);
+            JOptionPane.showMessageDialog(null, "Faltan parámetros por definir.");
         } else {
             UrlReportEAN13 = "src/reportes/Tiquet_EAN13.jasper";
             UrlReportEAN8 = "src/reportes/Tiquet_EAN8.jasper";

@@ -109,7 +109,7 @@ public class Precio {
     public String getDescatalogado() {
         if (this.descatalogado.equals("T")) {
             return "(T)";
-        }else{
+        } else {
             return "";
         }
     }
@@ -122,49 +122,92 @@ public class Precio {
     public String toString() {
         return "codArticulo: " + codArticulo + ", refProveedor: " + refProveedor + ", "
                 + "descripcion: " + descripcion + ", codBarras: " + codBarras
-                + ", precio: " + precioVenta + " medida: " + composicion ;
+                + ", precio: " + precioVenta + " medida: " + composicion;
     }
 
     public Precio consultarPrecio(String codBarra, Tiquet tiquet) {
 
         Precio precio = new Precio();
-        PreparedStatement statement = null;
+        Conexion conexion = new Conexion().conectarICG();
 
         try {
-            Conexion conexion = new Conexion().conectarICG();
 
             conexion.conectarSQL();
-            statement = conexion.getConn().prepareStatement(tiquet.getQuery());
-            statement.setString(1, tiquet.getAlmacen());
-            statement.setInt(2, tiquet.getTarifa());
-            statement.setString(3, codBarra);
-            statement.setString(4, codBarra);
-            statement.setString(5, codBarra);
-            statement.setString(6, codBarra);
+            String sqlValidarUsaStock = "SELECT A.CODARTICULO, A.USASTOCKS "
+                    + "FROM ARTICULOS A "
+                    + "INNER JOIN ARTICULOSLIN AL "
+                    + "ON A.CODARTICULO = AL.CODARTICULO "
+                    + "WHERE AL.TALLA = '.' AND AL.COLOR = '.' "
+                    + "AND (A.REFPROVEEDOR = ? OR AL.CODBARRAS = ? OR AL.CODBARRAS2 = ? OR AL.CODBARRAS3 = ? )";
+            PreparedStatement psValidarUsaStock = conexion.getConn().prepareStatement(sqlValidarUsaStock);
+            psValidarUsaStock.setString(1, codBarra);
+            psValidarUsaStock.setString(2, codBarra);
+            psValidarUsaStock.setString(3, codBarra);
+            psValidarUsaStock.setString(4, codBarra);
 
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                precio.setCodArticulo(rs.getInt("CODARTICULO"));
-                precio.setRefProveedor(rs.getString("REFPROVEEDOR"));
-                precio.setCodBarras(rs.getString("CODBARRAS"));
-                precio.setUnidad(rs.getString("UNIDAD"));
-                precio.setDescripcion(rs.getString("DESCRIPADIC"));
-                precio.setPrecioVenta(rs.getFloat("PRECIO"));
-                precio.setComposicion(rs.getString("TACON"));
-                precio.setMaximo(rs.getFloat("MAXIMO"));
-                precio.setDescatalogado(rs.getString("DESCATALOGADO"));
-                System.out.println(precio);
-            } else {
-                System.out.println("No existe el articulo");
+            ResultSet rsUsaStock = psValidarUsaStock.executeQuery();
+            if (rsUsaStock.next()) {
+                    PreparedStatement psPrecio = null;
+                if (rsUsaStock.getString("USASTOCKS").equals("T")) {
+                    psPrecio = conexion.getConn().prepareStatement(tiquet.getQueryConStock());
+                    psPrecio.setString(1, tiquet.getAlmacen());
+                    psPrecio.setInt(2, tiquet.getTarifa());
+                    psPrecio.setString(3, codBarra);
+                    psPrecio.setString(4, codBarra);
+                    psPrecio.setString(5, codBarra);
+                    psPrecio.setString(6, codBarra);
+
+                    ResultSet rsPrecio = psPrecio.executeQuery();
+                    if (rsPrecio.next()) {
+                        precio.setCodArticulo(rsPrecio.getInt("CODARTICULO"));
+                        precio.setRefProveedor(rsPrecio.getString("REFPROVEEDOR"));
+                        precio.setCodBarras(rsPrecio.getString("CODBARRAS"));
+                        precio.setUnidad(rsPrecio.getString("UNIDAD"));
+                        precio.setDescripcion(rsPrecio.getString("DESCRIPADIC"));
+                        precio.setPrecioVenta(rsPrecio.getFloat("PRECIO"));
+                        precio.setComposicion(rsPrecio.getString("TACON"));
+                        precio.setMaximo(rsPrecio.getFloat("MAXIMO"));
+                        precio.setDescatalogado(rsPrecio.getString("DESCATALOGADO"));
+                    } else {
+                        System.out.println("No existe el articulo");
+                    }
+                } else {
+                    psPrecio = conexion.getConn().prepareStatement(tiquet.getQuerySinStock());
+                    psPrecio.setInt(1, tiquet.getTarifa());
+                    psPrecio.setString(2, codBarra);
+                    psPrecio.setString(3, codBarra);
+                    psPrecio.setString(4, codBarra);
+                    psPrecio.setString(5, codBarra);
+
+                    ResultSet rsPrecio = psPrecio.executeQuery();
+                    if (rsPrecio.next()) {
+                        precio.setCodArticulo(rsPrecio.getInt("CODARTICULO"));
+                        precio.setRefProveedor(rsPrecio.getString("REFPROVEEDOR"));
+                        precio.setCodBarras(rsPrecio.getString("CODBARRAS"));
+                        precio.setUnidad(rsPrecio.getString("UNIDAD"));
+                        precio.setDescripcion(rsPrecio.getString("DESCRIPADIC"));
+                        precio.setPrecioVenta(rsPrecio.getFloat("PRECIO"));
+                        precio.setComposicion(rsPrecio.getString("TACON"));
+                        precio.setMaximo(rsPrecio.getFloat("MAXIMO"));
+                        precio.setDescatalogado(rsPrecio.getString("DESCATALOGADO"));
+                    } else {
+                        System.out.println("No existe el articulo");
+                    }
+                }
             }
-
-            conexion.cerrarConeccion();
+            System.out.println(precio);
             return precio;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Msj: " + e.getMessage(), "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-            e.printStackTrace();
+            return new Precio();
+        }finally{
+            if (conexion.getConn() != null) {
+                try {
+                    conexion.getConn().close();
+                } catch (Exception e) {
+                    System.out.println("Error al cerrar la conexión. Causa:\n" + e.getMessage());
+                }
+            }
         }
-
-        return precio;
     }
 }

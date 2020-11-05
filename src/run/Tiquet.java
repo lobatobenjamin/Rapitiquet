@@ -7,13 +7,14 @@ import org.ini4j.Ini;
 
 public class Tiquet {
 
-    private String query;
+    private String queryConStock;
+    private String querySinStock;
     private int tarifa;
     private String almacen;
     private String mayoreo;
 
     public Tiquet() {
-        query = "SELECT A.CODARTICULO, A.REFPROVEEDOR, AL.CODBARRAS, ISNULL(A.COMPOSICION,'') AS UNIDAD, A.DESCRIPADIC, "
+        queryConStock = "SELECT A.CODARTICULO, A.REFPROVEEDOR, AL.CODBARRAS, ISNULL(A.COMPOSICION,'') AS UNIDAD, A.DESCRIPADIC, "
                 + "CASE WHEN (LEFT(CONVERT(VARCHAR(8), GETDATE(), 112), 10) BETWEEN PV.DESDE2 AND  PV.HASTA2) "
                 + "THEN ISNULL(PV.PNETO2,0) + ISNULL(A.CARGO1,0) "
                 + "ELSE ISNULL(PV.PNETO,0) + ISNULL(A.CARGO1,0) "
@@ -31,19 +32,31 @@ public class Tiquet {
                 + "AND AL.TALLA = '.' AND AL.COLOR = '.' "
                 + "AND S.CODALMACEN = ? AND PV.IDTARIFAV = ? "
                 + "AND (A.REFPROVEEDOR = ? OR AL.CODBARRAS = ? OR AL.CODBARRAS2 = ? OR AL.CODBARRAS3 = ? )";
+        
+        querySinStock = "SELECT A.CODARTICULO, A.REFPROVEEDOR, AL.CODBARRAS, ISNULL(A.COMPOSICION,'') AS UNIDAD, A.DESCRIPADIC, "
+                + "CASE WHEN (LEFT(CONVERT(VARCHAR(8), GETDATE(), 112), 10) BETWEEN PV.DESDE2 AND  PV.HASTA2) "
+                + "THEN ISNULL(PV.PNETO2,0) + ISNULL(A.CARGO1,0) "
+                + "ELSE ISNULL(PV.PNETO,0) + ISNULL(A.CARGO1,0) "
+                + "END AS PRECIO, "
+                + "ISNULL(A.TACON,0) AS TACON, 0 AS MAXIMO, A.DESCATALOGADO "
+                + "FROM ARTICULOS A "
+                + "INNER JOIN PRECIOSVENTA PV "
+                + "ON (A.CODARTICULO = PV.CODARTICULO) "
+                + "INNER JOIN ARTICULOSLIN AL "
+                + "ON A.CODARTICULO = AL.CODARTICULO "
+                + "WHERE  PV.TALLA = '.' AND PV.COLOR = '.' "
+                + "AND AL.TALLA = '.' AND AL.COLOR = '.' "
+                + "AND PV.IDTARIFAV = ? "
+                + "AND (A.REFPROVEEDOR = ? OR AL.CODBARRAS = ? OR AL.CODBARRAS2 = ? OR AL.CODBARRAS3 = ? )";
         tarifa = 0;
     }
 
-    public Tiquet(String query) {
-        this.query = query;
+    public String getQueryConStock() {
+        return queryConStock;
     }
 
-    public String getQuery() {
-        return query;
-    }
-
-    public void setQuery(String query) {
-        this.query = query;
+    public String getQuerySinStock() {
+        return querySinStock;
     }
 
     public int getTarifa() {
@@ -72,10 +85,10 @@ public class Tiquet {
 
     @Override
     public String toString() {
-        return "Tiquet " + query;
+        return "queryConStock=" + queryConStock + ", querySinStock=" + querySinStock + ", tarifa=" + tarifa + ", almacen=" + almacen + ", mayoreo=" + mayoreo + '}';
     }
-    
-        public void cargarIni() {
+
+    public void cargarIni() {
         try {
             final String filename = "Parametros.ini";
             Ini ini = new Ini(new FileReader(filename));
@@ -87,5 +100,4 @@ public class Tiquet {
             ex.printStackTrace();
         }
     }
-
 }
