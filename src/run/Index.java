@@ -16,12 +16,12 @@ public class Index extends javax.swing.JFrame {
     private Tiquet tiquet;
     private Precio precio;
     List<Mayoreo> mayoreos;
-    private static JasperReport ReportEAN13 = null;
-    private static JasperReport ReportEAN8 = null;
-    private static JasperReport ReportUPCA = null;
-    private static JasperReport ReportUPCE = null;
-    private static JasperReport ReportEstandar = null;
-    private static JasperReport ReportSinCodeBar = null;
+    private static JasperReport ReportEAN13 = null, ReportEAN13Black = null, ReportEAN13BlackWhite = null;
+    private static JasperReport ReportEAN8 = null, ReportEAN8Black = null, ReportEAN8BlackWhite = null;
+    private static JasperReport ReportUPCA = null, ReportUPCABlack = null, ReportUPCABlackWhite = null;
+    private static JasperReport ReportUPCE = null, ReportUPCEBlack = null, ReportUPCEBlackWhite = null;
+    private static JasperReport ReportEstandar = null, ReportEstandarBlack = null, ReportEstandarBlackWhite = null;
+    private static JasperReport ReportSinCodeBar = null, ReportSinCodeBarBlack = null, ReportSinCodeBarBlackWhite = null;
     private static JasperReport ReportEAN13Mayoreo = null;
     private static JasperReport ReportEAN8Mayoreo = null;
     private static JasperReport ReportUPCAMayoreo = null;
@@ -29,12 +29,12 @@ public class Index extends javax.swing.JFrame {
     private static JasperReport ReportEstandarMayoreo = null;
     private static JasperReport ReportSinCodeBarMayoreo = null;
     private static JasperPrint jasperPrint = null;
-    private String UrlReportEAN13 = null;
-    private String UrlReportEAN8 = null;
-    private String UrlReportUPCA = null;
-    private String UrlReportUPCE = null;
-    private String UrlReportEstandar = null;
-    private String UrlReportSinCodeBar = null;
+    private String UrlReportEAN13 = null, UrlReportEAN13Black = null, UrlReportEAN13BlackWhite = null;
+    private String UrlReportEAN8 = null, UrlReportEAN8Black = null, UrlReportEAN8BlackWhite = null;
+    private String UrlReportUPCA = null, UrlReportUPCABlack = null, UrlReportUPCABlackWhite = null;
+    private String UrlReportUPCE = null, UrlReportUPCEBlack = null, UrlReportUPCEBlackWhite = null;
+    private String UrlReportEstandar = null, UrlReportEstandarBlack = null, UrlReportEstandarBlackWhite = null;
+    private String UrlReportSinCodeBar = null, UrlReportSinCodeBarBlack = null, UrlReportSinCodeBarBlackWhite = null;
     private String UrlReportEAN13Mayoreo = null;
     private String UrlReportEAN8Mayoreo = null;
     private String UrlReportUPCAMayoreo = null;
@@ -63,7 +63,7 @@ public class Index extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("RapiTiquet v1.7");
+        setTitle("RapiTiquet v1.8");
 
         txtBarra.setBackground(new java.awt.Color(180, 180, 233));
         txtBarra.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
@@ -158,10 +158,10 @@ public class Index extends javax.swing.JFrame {
                     if (precio.getCodArticulo() != 0) {
                         if (validarMayoreo() && tiquet.getMayoreo().equals("T")) {
                             System.out.println("Aplica mayoreo.");
-                            ImprimirTiquetMayoreo(true);
+                            ImprimirTiquetMayoreo();
+                        } else {
                             System.out.println("No aplica mayoreo.");
-                        }else{
-                            ImprimirTiquet(true);
+                            ImprimirTiquet();
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "El articulo no existe");
@@ -182,11 +182,29 @@ public class Index extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Faltan parámetros por definir.");
         } else {
             UrlReportEAN13 = "src/reportes/Tiquet_EAN13.jasper";
+            UrlReportEAN13Black = "src/reportes/Tiquet_EAN13_black.jasper";
+            UrlReportEAN13BlackWhite = "src/reportes/Tiquet_EAN13_black_white.jasper";
+
             UrlReportEAN8 = "src/reportes/Tiquet_EAN8.jasper";
+            UrlReportEAN8Black = "src/reportes/Tiquet_EAN8_black.jasper";
+            UrlReportEAN8BlackWhite = "src/reportes/Tiquet_EAN8_black_white.jasper";
+
             UrlReportUPCA = "src/reportes/Tiquet_UPC-A.jasper";
+            UrlReportUPCABlack = "src/reportes/Tiquet_UPC-A_black.jasper";
+            UrlReportUPCABlackWhite = "src/reportes/Tiquet_UPC-A_black_white.jasper";
+
             UrlReportUPCE = "src/reportes/Tiquet_UPC-E.jasper";
+            UrlReportUPCEBlack = "src/reportes/Tiquet_UPC-E_black.jasper";
+            UrlReportUPCEBlackWhite = "src/reportes/Tiquet_UPC-E_black_white.jasper";
+
             UrlReportEstandar = "src/reportes/Tiquet_Estandar.jasper";
+            UrlReportEstandarBlack = "src/reportes/Tiquet_Estandar_black.jasper";
+            UrlReportEstandarBlackWhite = "src/reportes/Tiquet_Estandar_black_white.jasper";
+
             UrlReportSinCodeBar = "src/reportes/Tiquet_Sin_CodeBar.jasper";
+            UrlReportSinCodeBarBlack = "src/reportes/Tiquet_Sin_CodeBar_black.jasper";
+            UrlReportSinCodeBarBlackWhite = "src/reportes/Tiquet_Sin_CodeBar_black_white.jasper";
+
             UrlReportEAN13Mayoreo = "src/reportes/Tiquet_EAN13Mayoreo.jasper";
             UrlReportEAN8Mayoreo = "src/reportes/Tiquet_EAN8Mayoreo.jasper";
             UrlReportUPCAMayoreo = "src/reportes/Tiquet_UPC-AMayoreo.jasper";
@@ -196,16 +214,33 @@ public class Index extends javax.swing.JFrame {
 
             try {
                 ReportEAN13 = (JasperReport) JRLoader.loadObject(UrlReportEAN13);
+                ReportEAN13Black = (JasperReport) JRLoader.loadObject(UrlReportEAN13Black);
+                ReportEAN13BlackWhite = (JasperReport) JRLoader.loadObject(UrlReportEAN13BlackWhite);
                 ReportEAN13Mayoreo = (JasperReport) JRLoader.loadObject(UrlReportEAN13Mayoreo);
+
                 ReportEAN8 = (JasperReport) JRLoader.loadObject(UrlReportEAN8);
+                ReportEAN8Black = (JasperReport) JRLoader.loadObject(UrlReportEAN8Black);
+                ReportEAN8BlackWhite = (JasperReport) JRLoader.loadObject(UrlReportEAN8BlackWhite);
                 ReportEAN8Mayoreo = (JasperReport) JRLoader.loadObject(UrlReportEAN8Mayoreo);
+
                 ReportUPCA = (JasperReport) JRLoader.loadObject(UrlReportUPCA);
+                ReportUPCABlack = (JasperReport) JRLoader.loadObject(UrlReportUPCABlack);
+                ReportUPCABlackWhite = (JasperReport) JRLoader.loadObject(UrlReportUPCABlackWhite);
                 ReportUPCAMayoreo = (JasperReport) JRLoader.loadObject(UrlReportUPCAMayoreo);
+
                 ReportUPCE = (JasperReport) JRLoader.loadObject(UrlReportUPCE);
+                ReportUPCEBlack = (JasperReport) JRLoader.loadObject(UrlReportUPCEBlack);
+                ReportUPCEBlackWhite = (JasperReport) JRLoader.loadObject(UrlReportUPCEBlackWhite);
                 ReportUPCEMayoreo = (JasperReport) JRLoader.loadObject(UrlReportUPCEMayoreo);
+
                 ReportEstandar = (JasperReport) JRLoader.loadObject(UrlReportEstandar);
+                ReportEstandarBlack = (JasperReport) JRLoader.loadObject(UrlReportEstandarBlack);
+                ReportEstandarBlackWhite = (JasperReport) JRLoader.loadObject(UrlReportEstandarBlackWhite);
                 ReportEstandarMayoreo = (JasperReport) JRLoader.loadObject(UrlReportEstandarMayoreo);
+
                 ReportSinCodeBar = (JasperReport) JRLoader.loadObject(UrlReportSinCodeBar);
+                ReportSinCodeBarBlack = (JasperReport) JRLoader.loadObject(UrlReportSinCodeBarBlack);
+                ReportSinCodeBarBlackWhite = (JasperReport) JRLoader.loadObject(UrlReportSinCodeBarBlackWhite);
                 ReportSinCodeBarMayoreo = (JasperReport) JRLoader.loadObject(UrlReportSinCodeBarMayoreo);
             } catch (JRException e) {
                 JOptionPane.showMessageDialog(null, "Existen problemas al cargar el informe. " + e.getMessage());
@@ -213,7 +248,7 @@ public class Index extends javax.swing.JFrame {
         }
     }
 
-    public synchronized void ImprimirTiquet(boolean t) {
+    public synchronized void ImprimirTiquet() {
         String pUnidad = "";
         String pum = "";
         if (!precio.getComposicion().trim().isEmpty()) {
@@ -235,63 +270,100 @@ public class Index extends javax.swing.JFrame {
         parametros.put("pum", pum);
         parametros.put("max", formatNumeros.format(precio.getMaximo()));
         parametros.put("descatalogado", precio.getDescatalogado());
-
-        if (precio.getCodBarras().isEmpty()) {
-            try {
+        try {
+            if (precio.getCodBarras().isEmpty()) {
                 System.out.println("Sin barra");
-                jasperPrint = JasperFillManager.fillReport(ReportSinCodeBar, parametros, new JREmptyDataSource());
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Existen problemas al procesar el informe " + ex.getMessage());
-            }
-        } else {
-            System.out.println(precio.getCodBarras().length());
-            switch (precio.getCodBarras().length()) {
+                switch (precio.getCodAduana()) {
+                    case 1:
+                        jasperPrint = JasperFillManager.fillReport(ReportSinCodeBarBlack, parametros, new JREmptyDataSource());
+                        break;
+                    case 2:
+                        jasperPrint = JasperFillManager.fillReport(ReportSinCodeBarBlackWhite, parametros, new JREmptyDataSource());
+                        break;
+                    default:
+                        jasperPrint = JasperFillManager.fillReport(ReportSinCodeBar, parametros, new JREmptyDataSource());
+                        break;
 
-                case 8:
-                    if (precio.getCodBarras().substring(0, 1).equals("0")) {
-                        try {
-                            System.out.println("UPC-E");
-                            jasperPrint = JasperFillManager.fillReport(ReportUPCE, parametros, new JREmptyDataSource());
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(this, "Existen problemas al procesar el informe " + ex.getMessage());
+                }
+            } else {
+                System.out.println(precio.getCodBarras().length());
+                switch (precio.getCodBarras().length()) {
+                    case 8:
+                        if (precio.getCodBarras().substring(0, 1).equals("0")) {
+                            switch (precio.getCodAduana()) {
+                                case 1:
+                                    jasperPrint = JasperFillManager.fillReport(ReportUPCEBlack, parametros, new JREmptyDataSource());
+                                    break;
+                                case 2:
+                                    jasperPrint = JasperFillManager.fillReport(ReportUPCEBlackWhite, parametros, new JREmptyDataSource());
+                                    break;
+                                default:
+                                    jasperPrint = JasperFillManager.fillReport(ReportUPCE, parametros, new JREmptyDataSource());
+                                    break;
+                            }
+                        } else {
+                            switch (precio.getCodAduana()) {
+                                case 1:
+                                    jasperPrint = JasperFillManager.fillReport(ReportEAN8Black, parametros, new JREmptyDataSource());
+                                    break;
+                                case 2:
+                                    jasperPrint = JasperFillManager.fillReport(ReportEAN8BlackWhite, parametros, new JREmptyDataSource());
+                                    break;
+                                default:
+                                    jasperPrint = JasperFillManager.fillReport(ReportEAN8, parametros, new JREmptyDataSource());
+                                    break;
+                            }
                         }
-                    } else {
-                        try {
-                            System.out.println("EAN8");
-                            jasperPrint = JasperFillManager.fillReport(ReportEAN8, parametros, new JREmptyDataSource());
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(this, "Existen problemas al procesar el informe " + ex.getMessage());
-                        }
-                    }
-                    break;
+                        break;
 
-                case 12:
-                    try {
+                    case 12:
                         System.out.println("UPC-A");
-                        jasperPrint = JasperFillManager.fillReport(ReportUPCA, parametros, new JREmptyDataSource());
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(this, "Existen problemas al procesar el informe " + ex.getMessage());
-                    }
-                    break;
+                        switch (precio.getCodAduana()) {
+                            case 1:
+                                jasperPrint = JasperFillManager.fillReport(ReportUPCABlack, parametros, new JREmptyDataSource());
+                                break;
+                            case 2:
+                                jasperPrint = JasperFillManager.fillReport(ReportUPCABlackWhite, parametros, new JREmptyDataSource());
+                                break;
+                            default:
+                                jasperPrint = JasperFillManager.fillReport(ReportUPCA, parametros, new JREmptyDataSource());
+                                break;
+                        }
+                        break;
 
-                case 13:
-                    try {
+                    case 13:
                         System.out.println("EAN13");
-                        jasperPrint = JasperFillManager.fillReport(ReportEAN13, parametros, new JREmptyDataSource());
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(this, "Existen problemas al procesar el informe " + ex.getMessage());
-                    }
-                    break;
+                        switch (precio.getCodAduana()) {
+                            case 1:
+                                jasperPrint = JasperFillManager.fillReport(ReportEAN13Black, parametros, new JREmptyDataSource());
+                                break;
+                            case 2:
+                                jasperPrint = JasperFillManager.fillReport(ReportEAN13BlackWhite, parametros, new JREmptyDataSource());
+                                break;
+                            default:
+                                jasperPrint = JasperFillManager.fillReport(ReportEAN13, parametros, new JREmptyDataSource());
+                                break;
+                        }
+                        break;
 
-                default:
-                    try {
+                    default:
                         System.out.println("Estandar");
-                        jasperPrint = JasperFillManager.fillReport(ReportEstandar, parametros, new JREmptyDataSource());
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(this, "Existen problemas al procesar el informe " + ex.getMessage());
-                    }
-                    break;
+                        switch (precio.getCodAduana()) {
+                            case 1:
+                                jasperPrint = JasperFillManager.fillReport(ReportEstandar, parametros, new JREmptyDataSource());
+                                break;
+                            case 2:
+                                jasperPrint = JasperFillManager.fillReport(ReportEstandarBlack, parametros, new JREmptyDataSource());
+                                break;
+                            case 0:
+                                jasperPrint = JasperFillManager.fillReport(ReportEstandarBlackWhite, parametros, new JREmptyDataSource());
+                                break;
+                        }
+                        break;
+                }
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al procesar el formato.\nCausa: " + e.getMessage());
         }
         try {
             try {
@@ -306,7 +378,7 @@ public class Index extends javax.swing.JFrame {
         }
     }
 
-    public synchronized void ImprimirTiquetMayoreo(boolean t) {
+    public synchronized void ImprimirTiquetMayoreo() {
         String pUnidad = "";
         String pum = "";
         if (!precio.getComposicion().trim().isEmpty()) {
@@ -322,7 +394,7 @@ public class Index extends javax.swing.JFrame {
         for (int i = 0; i < 2; i++) {
             preciosMayoreo[i] = mayoreos.get(i).toString();
         }
-        
+
         Map parametros = new HashMap();
         parametros.put("codBarra", precio.getCodBarras());
         parametros.put("descripcion", precio.getDescripcion());
@@ -335,62 +407,42 @@ public class Index extends javax.swing.JFrame {
         parametros.put("precio_1", preciosMayoreo[0]);
         parametros.put("precio_2", preciosMayoreo[1]);
 
-        if (precio.getCodBarras().isEmpty()) {
-            try {
+        try {
+            if (precio.getCodBarras().isEmpty()) {
                 System.out.println("Sin barra");
                 jasperPrint = JasperFillManager.fillReport(ReportSinCodeBarMayoreo, parametros, new JREmptyDataSource());
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Existen problemas al procesar el informe " + ex.getMessage());
-            }
-        } else {
-            System.out.println(precio.getCodBarras().length());
-            switch (precio.getCodBarras().length()) {
+            } else {
+                System.out.println(precio.getCodBarras().length());
+                switch (precio.getCodBarras().length()) {
 
-                case 8:
-                    if (precio.getCodBarras().substring(0, 1).equals("0")) {
-                        try {
+                    case 8:
+                        if (precio.getCodBarras().substring(0, 1).equals("0")) {
                             System.out.println("UPC-E");
                             jasperPrint = JasperFillManager.fillReport(ReportUPCEMayoreo, parametros, new JREmptyDataSource());
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(this, "Existen problemas al procesar el informe " + ex.getMessage());
-                        }
-                    } else {
-                        try {
+                        } else {
                             System.out.println("EAN8");
                             jasperPrint = JasperFillManager.fillReport(ReportEAN8Mayoreo, parametros, new JREmptyDataSource());
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(this, "Existen problemas al procesar el informe " + ex.getMessage());
                         }
-                    }
-                    break;
+                        break;
 
-                case 12:
-                    try {
+                    case 12:
                         System.out.println("UPC-A");
                         jasperPrint = JasperFillManager.fillReport(ReportUPCAMayoreo, parametros, new JREmptyDataSource());
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(this, "Existen problemas al procesar el informe " + ex.getMessage());
-                    }
-                    break;
+                        break;
 
-                case 13:
-                    try {
+                    case 13:
                         System.out.println("EAN13");
                         jasperPrint = JasperFillManager.fillReport(ReportEAN13Mayoreo, parametros, new JREmptyDataSource());
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(this, "Existen problemas al procesar el informe " + ex.getMessage());
-                    }
-                    break;
+                        break;
 
-                default:
-                    try {
+                    default:
                         System.out.println("Estandar");
                         jasperPrint = JasperFillManager.fillReport(ReportEstandarMayoreo, parametros, new JREmptyDataSource());
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(this, "Existen problemas al procesar el informe " + ex.getMessage());
-                    }
-                    break;
+                        break;
+                }
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error al procesar el tiquet de precio.\nCausa:" + e.getMessage());
         }
         try {
             try {
@@ -405,17 +457,17 @@ public class Index extends javax.swing.JFrame {
         }
     }
 
-    public boolean validarMayoreo(){
+    public boolean validarMayoreo() {
         Mayoreo mayoreo = new Mayoreo();
         mayoreos = new ArrayList<Mayoreo>();
         mayoreos = mayoreo.validarArticulo(precio);
-        if(!mayoreos.isEmpty()){
+        if (!mayoreos.isEmpty()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    
+
     public static void main(String args[]) {
 
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -444,6 +496,7 @@ public class Index extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
                 new Index().setVisible(true);
             }

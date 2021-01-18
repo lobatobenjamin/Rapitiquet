@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="218" pageHeight="88" orientation="Landscape" columnWidth="200" leftMargin="7" rightMargin="11" topMargin="3" bottomMargin="3" uuid="f93b04c4-f822-4396-8bc1-32ace1ec7057">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Style_escala" forecolor="#FFFFFF" pattern="" fontName="SansSerif">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean("T".equals($P{escala}))]]></conditionExpression>
+			<style forecolor="#000000" backcolor="#000000" isBold="true"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean("F".equals($P{escala}))]]></conditionExpression>
+			<style/>
+		</conditionalStyle>
+	</style>
+	<parameter name="codBarra" class="java.lang.String">
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Fecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[new SimpleDateFormat("yyyyMMdd").format(new java.util.Date())]]></defaultValueExpression>
+	</parameter>
+	<parameter name="descripcion" class="java.lang.String"/>
+	<parameter name="precio" class="java.lang.String"/>
+	<parameter name="unidad" class="java.lang.String"/>
+	<parameter name="pUnidad" class="java.lang.String"/>
+	<parameter name="referencia" class="java.lang.String"/>
+	<parameter name="escala" class="java.lang.String"/>
+	<parameter name="pum" class="java.lang.String"/>
+	<parameter name="max" class="java.lang.String"/>
+	<parameter name="descatalogado" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<variable name="PUnidad" class="java.lang.String"/>
+	<variable name="Fecha" class="java.lang.String">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<title>
+		<band height="74">
+			<rectangle>
+				<reportElement uuid="8d79f303-1fae-4435-b129-edff724ce58f" x="0" y="0" width="200" height="73" backcolor="#000000"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="5111ac46-4e39-4ff5-b927-3f9200c69cae" x="100" y="15" width="97" height="58" forecolor="#FFFFFF" backcolor="#000000"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="09c1bdb4-1a4c-442a-828a-b659241d3aa3" x="0" y="15" width="98" height="29" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="23" isBold="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{precio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b67c7be5-bd0e-45d1-9b68-5f398b83192c" x="139" y="14" width="48" height="18" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="14" isBold="true"/>
+					<paragraph lineSpacing="Fixed"/>
+				</textElement>
+				<text><![CDATA[Sale a:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1bd0ed47-3217-4abf-ba07-db1b41b3475f" x="110" y="14" width="28" height="18" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{unidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a7ec5bc3-26fa-4cc9-ab0d-cbdce8f1f9ca" x="100" y="31" width="97" height="29" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
+					<font size="23" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{pUnidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="254351cd-2769-4076-9833-62ae4fafcd42" x="13" y="63" width="46" height="11" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{referencia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="51c40c0b-d963-4624-84ca-5789d6b4769a" x="159" y="64" width="35" height="8" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement>
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f72de9ab-ccbb-4953-be4f-af8a7e1d5a4f" x="111" y="58" width="28" height="14" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[PUM]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7f00875d-73ff-42dd-a26c-63e0facd2b67" x="0" y="0" width="200" height="15" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0afd7c1e-5d44-478c-9472-cacaec1bfc3e" x="59" y="63" width="24" height="11" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{max}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c87bdbbe-2e4e-49b3-875e-d2b8256e2929" x="83" y="63" width="15" height="11" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{descatalogado}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement uuid="18609da1-2cc3-4e8b-b801-01308609fc28" x="13" y="45" width="70" height="18"/>
+			</rectangle>
+			<componentElement>
+				<reportElement uuid="eaff0992-16ee-452c-8a04-fe701718cc44" x="13" y="45" width="70" height="12"/>
+				<jr:UPCE xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="none">
+					<jr:codeExpression><![CDATA[$P{codBarra}]]></jr:codeExpression>
+				</jr:UPCE>
+			</componentElement>
+			<textField>
+				<reportElement uuid="65c9976b-cb04-4cf6-9d0e-4464f7ab113c" x="13" y="55" width="70" height="8"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+					<font size="6" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{codBarra}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

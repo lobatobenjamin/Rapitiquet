@@ -17,6 +17,7 @@ public class Precio {
     private float precioVenta;
     private float maximo;
     private String descatalogado;
+    private int codAduana;
 
     public Precio() {
     }
@@ -118,6 +119,14 @@ public class Precio {
         this.descatalogado = descatalogado;
     }
 
+    public int getCodAduana() {
+        return codAduana;
+    }
+
+    public void setCodAduana(int codAduana) {
+        this.codAduana = codAduana;
+    }
+
     @Override
     public String toString() {
         return "codArticulo: " + codArticulo + ", refProveedor: " + refProveedor + ", "
@@ -190,6 +199,7 @@ public class Precio {
                         precio.setComposicion(rsPrecio.getString("TACON"));
                         precio.setMaximo(rsPrecio.getFloat("MAXIMO"));
                         precio.setDescatalogado(rsPrecio.getString("DESCATALOGADO"));
+                        precio.setCodAduana(rsPrecio.getInt("CODIGOADUANA"));
                     } else {
                         System.out.println("No existe el articulo");
                     }
