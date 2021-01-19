@@ -350,13 +350,13 @@ public class Index extends javax.swing.JFrame {
                         System.out.println("Estandar");
                         switch (precio.getCodAduana()) {
                             case 1:
-                                jasperPrint = JasperFillManager.fillReport(ReportEstandar, parametros, new JREmptyDataSource());
-                                break;
-                            case 2:
                                 jasperPrint = JasperFillManager.fillReport(ReportEstandarBlack, parametros, new JREmptyDataSource());
                                 break;
-                            case 0:
+                            case 2:
                                 jasperPrint = JasperFillManager.fillReport(ReportEstandarBlackWhite, parametros, new JREmptyDataSource());
+                                break;
+                            default:
+                                jasperPrint = JasperFillManager.fillReport(ReportEstandar, parametros, new JREmptyDataSource());
                                 break;
                         }
                         break;
