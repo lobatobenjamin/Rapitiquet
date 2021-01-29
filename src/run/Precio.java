@@ -177,6 +177,7 @@ public class Precio {
                         precio.setComposicion(rsPrecio.getString("TACON"));
                         precio.setMaximo(rsPrecio.getFloat("MAXIMO"));
                         precio.setDescatalogado(rsPrecio.getString("DESCATALOGADO"));
+                        precio.setCodAduana(rsPrecio.getInt("CODIGOADUANA"));
                     } else {
                         System.out.println("No existe el articulo");
                     }
