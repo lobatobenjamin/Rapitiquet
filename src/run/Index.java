@@ -63,7 +63,7 @@ public class Index extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("RapiTiquet v1.8.1");
+        setTitle("RapiTiquet v1.8.2");
 
         txtBarra.setBackground(new java.awt.Color(180, 180, 233));
         txtBarra.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
